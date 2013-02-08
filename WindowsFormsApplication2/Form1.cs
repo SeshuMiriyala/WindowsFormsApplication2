@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Facebook;
 using System.Dynamic;
 using System.Net;
+using System.Windows.Forms;
+using Facebook;
 
 namespace WindowsFormsApplication2
 {
@@ -160,7 +155,7 @@ namespace WindowsFormsApplication2
                 //Get the access token of the posting user if we need to
                 //if (destinationID != this.FacebookAccount.UserAccountId)
                 //{
-                
+
                 //}
                 var webClient = new WebClient();
                 string oauthUrl = string.Format("https://graph.facebook.com/oauth/access_token?type=client_cred&client_id={0}&client_secret={1}", "558074537545521", "c164ed58b42a494127d0b8a4c42a043f");
