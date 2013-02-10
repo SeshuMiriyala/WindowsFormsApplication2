@@ -158,12 +158,20 @@ namespace WindowsFormsApplication2
 
                 //}
                 var webClient = new WebClient();
-                string oauthUrl = string.Format("https://graph.facebook.com/oauth/access_token?type=client_cred&client_id={0}&client_secret={1}", "558074537545521", "c164ed58b42a494127d0b8a4c42a043f");
+                string oauthUrl = string.Format("https://graph.facebook.com/me/accounts?access_token={0}", FacebookOAuthResult.AccessToken);
 
-                string accessToken = webClient.DownloadString(oauthUrl).Split('=')[1];
+                string accessToken = webClient.DownloadString(oauthUrl);
+                //var json = System.Runtime.Serialization.s
+                //https://developers.facebook.com/docs/howtos/login/login-as-page/
+                //https://graph.facebook.com/seshu.miriyala.1/accounts?access_token=AAACEdEose0cBAG7kZCHS59oeoB4fV6jjRsm4je68vpMQUqXM6G5YsasRCFs4wPi3ld0bdGSAZAZBLZBEbyPrMRHvSk78uJZAdApaZC7D6gx9NyE08vLf0W
+                //http://developers.facebook.com/docs/getting-started/graphapi/
+                //http://stackoverflow.com/questions/3010707/facebook-graph-api-facebook-pages
                 dicParams["access_token"] = accessToken;
                 var fbc = new FacebookClient(accessToken);
                 string pagePosts = webClient.DownloadString(string.Format("https://graph.facebook.com/wikipedia/posts?access_token={0} ", accessToken));
+                String[] permissions = { "offline_access", "publish_stream", "user_photos", "publish_checkins", "photo_upload" };
+                //FacebookClient.a.authorize(MainActivity.this, permissions,
+                //            new LoginDialogListener());
                 dynamic publishResponse = fbc.Post("https://graph.facebook.com/MQ163/feed", dicParams);
             }
             else
@@ -177,5 +185,10 @@ namespace WindowsFormsApplication2
         {
             webBrowser1.Navigate(_loginUrl.AbsoluteUri);
         }
+    }
+
+    public class Entity
+    {
+        public EntityData Data { get; set; }
     }
 }
