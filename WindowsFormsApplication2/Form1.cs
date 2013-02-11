@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Net;
+using System.Linq;
 using System.Windows.Forms;
 using Facebook;
+using System.Web.Script.Serialization;
 
 namespace WindowsFormsApplication2
 {
@@ -145,34 +147,47 @@ namespace WindowsFormsApplication2
                 pictureBox1.LoadAsync(profilePictureUrl);
                 pictureBox1.Visible = true;
                 var dicParams = new Dictionary<string, object>();
-                dicParams["message"] = "This is Test1";
-                dicParams["caption"] = "Test1";
-                dicParams["description"] = "first sample";
-                dicParams["name"] = "This is Test1";
-                dicParams["req_perms"] = "publish_stream";
-                dicParams["scope"] = "publish_stream";
+                dicParams["message"] = "Can You see this?";
+                dicParams["caption"] = "Test2";
+                dicParams["description"] = "first sample1";
+                dicParams["name"] = "This is Test2";
+                dicParams["req_perms"] = "manage_pages";
+                dicParams["scope"] = "manage_pages";
 
                 //Get the access token of the posting user if we need to
                 //if (destinationID != this.FacebookAccount.UserAccountId)
                 //{
 
                 //}
-                var webClient = new WebClient();
-                string oauthUrl = string.Format("https://graph.facebook.com/me/accounts?access_token={0}", FacebookOAuthResult.AccessToken);
+                //var webClient = new WebClient();
+                //string oauthUrl = string.Format("https://graph.facebook.com/me/accounts?access_token={0}", FacebookOAuthResult.AccessToken);
 
-                string accessToken = webClient.DownloadString(oauthUrl);
+                //string data = webClient.DownloadString(oauthUrl);
+                //var json = new JavaScriptSerializer();
+                //var pages = (Dictionary<string, object>)json.DeserializeObject(data);
+                //object[] pages2 = (object[])pages.FirstOrDefault(p => p.Key == "data").Value;
+                //string accessToken = null;
+                //foreach (object page in pages2)
+                //{
+                    //Dictionary<string, object> page2 = (Dictionary<string, object>)page;
+                //    if (page2["name"].ToString() == "MQ163")
+                //    {
+                //        accessToken = page2["access_token"].ToString();
+                //        break;
+                //    }
+                //}
                 //var json = System.Runtime.Serialization.s
                 //https://developers.facebook.com/docs/howtos/login/login-as-page/
                 //https://graph.facebook.com/seshu.miriyala.1/accounts?access_token=AAACEdEose0cBAG7kZCHS59oeoB4fV6jjRsm4je68vpMQUqXM6G5YsasRCFs4wPi3ld0bdGSAZAZBLZBEbyPrMRHvSk78uJZAdApaZC7D6gx9NyE08vLf0W
                 //http://developers.facebook.com/docs/getting-started/graphapi/
                 //http://stackoverflow.com/questions/3010707/facebook-graph-api-facebook-pages
-                dicParams["access_token"] = accessToken;
-                var fbc = new FacebookClient(accessToken);
-                string pagePosts = webClient.DownloadString(string.Format("https://graph.facebook.com/wikipedia/posts?access_token={0} ", accessToken));
-                String[] permissions = { "offline_access", "publish_stream", "user_photos", "publish_checkins", "photo_upload" };
+                dicParams["access_token"] = FacebookOAuthResult.AccessToken;
+                //var fbc = new FacebookClient(accessToken);
+                //string pagePosts = webClient.DownloadString(string.Format("https://graph.facebook.com/wikipedia/posts?access_token={0} ", accessToken));
+                //String[] permissions = { "offline_access", "publish_stream", "user_photos", "publish_checkins", "photo_upload" };
                 //FacebookClient.a.authorize(MainActivity.this, permissions,
                 //            new LoginDialogListener());
-                dynamic publishResponse = fbc.Post("https://graph.facebook.com/MQ163/feed", dicParams);
+                dynamic publishResponse = client.Post("https://graph.facebook.com/MQ163/feed", dicParams);
             }
             else
             {
